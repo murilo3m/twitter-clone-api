@@ -8,6 +8,10 @@ module.exports = {
 
     async store(req, res){
         const tweet = await Tweet.create(req.body)
+
+        //This little thing will alert everyone that's a new tweet!
+        req.io.emit('tweet', tweet)
+
         return res.json(tweet)
     }
 }
