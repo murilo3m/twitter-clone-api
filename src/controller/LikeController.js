@@ -5,8 +5,9 @@ module.exports = {
         const tweet = await Tweet.findById(req.params.id)
         tweet.set({likes: tweet.likes + 1})
 
-        //Save and return tweet
+        //Save, send socket notification and return tweet
         await tweet.save()
+        req.io.emit('like', tweet)
         return res.json(tweet)
     }
 }
